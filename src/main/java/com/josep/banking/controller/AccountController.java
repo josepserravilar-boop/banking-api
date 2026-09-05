@@ -4,7 +4,7 @@ import com.josep.banking.model.Account;
 import com.josep.banking.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.josep.banking.dto.AmountRequest;
+import com.josep.banking.dto.*;
 import java.util.List;
 
 @RestController
@@ -50,6 +50,20 @@ public class AccountController {
             @RequestBody AmountRequest request) {
 
         return accountService.withdraw(id, request.getAmount())
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/transfer")
+    public ResponseEntity<Account> transfer(
+            @PathVariable Long id,
+            @RequestBody TransferRequest request) {
+
+        return accountService.transfer(
+                        id,
+                        request.getDestinationAccountId(),
+                        request.getAmount()
+                )
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
