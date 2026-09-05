@@ -2,9 +2,7 @@ package com.josep.banking.controller;
 
 import com.josep.banking.model.Transaction;
 import com.josep.banking.service.TransactionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,12 @@ public class TransactionController {
     @GetMapping
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
+    }
+
+    @GetMapping("/account/{accountId}")
+    public List<Transaction> getTransactionsByAccountId(
+            @PathVariable Long accountId) {
+
+        return transactionService.getTransactionsByAccountId(accountId);
     }
 }

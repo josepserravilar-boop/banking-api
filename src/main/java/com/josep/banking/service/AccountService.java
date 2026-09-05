@@ -34,6 +34,7 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
+    @Transactional
     public Optional<Account> deposit(Long id, BigDecimal amount) {
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
@@ -66,6 +67,7 @@ public class AccountService {
         return Optional.of(accountRepository.save(account));
     }
 
+    @Transactional
     public Optional<Account> withdraw(Long id, BigDecimal amount){
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <=0){
