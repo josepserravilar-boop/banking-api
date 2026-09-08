@@ -218,4 +218,22 @@ class AccountServiceTest {
         verify(transactionRepository, never())
                 .save(any(Transaction.class));
     }
+
+    @Test
+    void createAccountShouldRejectNegativeBalance() {
+
+        Account account = new Account(
+                "Josep",
+                "josep@example.com",
+                new BigDecimal("-100.00")
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> accountService.createAccount(account)
+        );
+
+        verify(accountRepository, never())
+                .save(any(Account.class));
+    }
 }

@@ -23,6 +23,14 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
+
+        if (account.getBalance() == null ||
+                account.getBalance().compareTo(BigDecimal.ZERO) < 0) {
+
+            throw new IllegalArgumentException(
+                    "Initial balance cannot be negative"
+            );
+        }
         return accountRepository.save(account);
     }
 
