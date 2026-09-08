@@ -236,4 +236,20 @@ class AccountServiceTest {
         verify(accountRepository, never())
                 .save(any(Account.class));
     }
+
+    @Test
+    void transferShouldRejectSameSourceAndDestination() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> accountService.transfer(
+                        1L,
+                        1L,
+                        new BigDecimal("100.00")
+                )
+        );
+
+        verify(transactionRepository, never())
+                .save(any(Transaction.class));
+    }
 }
